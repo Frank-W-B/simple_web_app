@@ -1,0 +1,39 @@
+AWS console
+Start up an Amazon Linux AMI
+(selecting t2.micro)
+Add Custom TCP rule
+Protocol: TCP
+Port Range: 8080 (matches Docker image and Flask python file)
+Source: ::/0
+
+SSH to connect to your instance
+$ ssh -i ~/.ssh/<key-pair>.pem ec2-user@IP
+
+
+Now Start following directions on how to install Docker on AWS:
+https://docs.aws.amazon.com/AmazonECS/latest/developerguide/docker-basics.html?shortFooter=true#install_docker
+
+sudo yum update -y
+sudo yum install -y docker
+sudo service docker start
+sudo usermod -a -G docker ec2-user
+
+Close your connection (exit), then ssh back in.
+docker info
+
+login to docker
+docker login
+
+Start a screen session
+screen -S bootstrap_flask
+
+Create the container
+docker run -p 8080:8080 frankwb/examples:bootstrap3_flask
+
+Detach from the session
+ctrt-a then d
+
+Now go look at it in the browser:
+http://ec2-54-209-204-146.compute-1.amazonaws.com:8080/
+
+
